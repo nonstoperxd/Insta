@@ -25,13 +25,13 @@ def login():
     soup = BeautifulSoup(response, 'html.parser')
     
     if soup.find('input', {'name': 'approvals_code'}):
-        print("\Your account is stuck on verification\Please do it and then re-run the program.")
+        print("Your account is stuck on verification. Please do it and then re-run the program.")
         exit(1)
     elif soup.find('input', {'name': 'submit[This was me]'}):
-        print("\Facebook wants to review your recent actions.\Please fix that and then re-run the program.")
+        print("Facebook wants to review your recent actions. Please fix that and then re-run the program.")
         exit(1)
     elif soup.find('input', {'name': 'submit[This was not me]'}):
-        print("\Your account got locked, recover it kindly and re-run the script.")
+        print("Your account got locked, recover it kindly and re-run the script.")
         exit(1)
     else:
         browser.select_form(nr=0)
@@ -48,13 +48,13 @@ def find_text_chat(curl):
             r = browser.open(curl)
             x = browser.title()
             if x == "Review recent login":
-                print("\Facebook wants to review your recent actions.\Please fix that and then re-run the program.")
+                print("Facebook wants to review your recent actions. Please fix that and then re-run the program.")
                 exit(1)
             if x == "Login approval needed":
-                print("\Your account is stuck on verification\Please do it and then re-run the program.")
+                print("Your account is stuck on verification. Please do it and then re-run the program.")
                 exit(1)
             if x == "Epsilon":
-                print("\Your account got locked, recover it kindly and re-run the script.")
+                print("Your account got locked, recover it kindly and re-run the script.")
                 exit(1)
             break
         except mechanize.URLError as e:
@@ -78,7 +78,7 @@ def send_text_convo(comment):
         e = datetime.datetime.now()
         print("\33[1;32;40m", end="")
         print(e.strftime("%d/%m/%Y   %I:%M:%S %p"))
-        print(">>", line, "\")
+        print(">>", line)
     except Exception as e:
         print("Error sending message:", str(e))
 
@@ -91,16 +91,16 @@ print("ComandoKings")
 print('===========================================================')
 print("\33[1;37;40m")
 print("\33[1;33;40m", end="")
-print("➥✪Enter your email :\")
+print("➥✪Enter your email :")
 print("\33[1;37;40m")
 USERNAME = str(input())
 print("\33[1;33;40m", end="")
-print("➥✪Enter your password :\")
+print("➥✪Enter your password :")
 print("\33[1;37;40m")
 PASSWORD = str(input())
 login()
 print("\33[1;33;40m", end="")
-print("➥✪Enter chat group or inbox ID link :\")
+print("➥✪Enter chat group or inbox ID link :")
 print("\33[1;37;40m")
 cid = str(input())
 curl = 'https://www.instagram.com/direct/t/' + str(cid)
@@ -113,7 +113,7 @@ f = open(np, 'r')
 lines = f.readlines()
 f.close()
 print("\33[1;33;40m", end="")
-print("➥✪Enter the delay time in seconds :\")
+print("➥✪Enter the delay time in seconds :")
 print("\33[1;37;40m")
 t = int(input())
 
@@ -137,4 +137,4 @@ while True:
             if count % 10 == 0:
                 sleep(1)
                 clear()
-                print("\33[0;37;41m\")
+                print("\33[0;37;41m")
