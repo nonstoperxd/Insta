@@ -1,0 +1,82 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import os
+from time import sleep
+
+# Defining Functions
+
+def clear():
+    os.system('clear' if os.name == 'posix' else 'cls')
+
+def login():
+    driver = webdriver.Chrome()  # You need to have ChromeDriver installed
+    driver.get(url)
+    username_field = driver.find_element_by_name('username')
+    password_field = driver.find_element_by_name('password')
+    username_field.send_keys(email)
+    password_field.send_keys(password)
+    password_field.send_keys(Keys.RETURN)
+    sleep(5)  # Adjust the delay as needed
+    driver.quit()
+
+def find_text_chat(curl):
+    driver.get(curl)
+
+def send_text_convo(comment):
+    message_field = driver.find_element_by_tag_name('textarea')
+    message_field.send_keys(comment)
+    message_field.send_keys(Keys.RETURN)
+
+# Main Script
+
+clear()
+
+print("   ______               _       ______ _ _       ")
+print("  |  ____|             (_)     |  ____(_) |      ")
+print("  | |__ _ __ __ _ _ __  _ ______| |__   _| | ___  ")
+print("  |  __| '__/ _` | '_ \| |______|  __| | | |/ _ \ ")
+print("  | |  | | | (_| | | | | |      | |    | | |  __/")
+print("  |_|  |_|  \__,_|_| |_|_|      |_|    |_|_|\___|")
+print("\n")
+
+email = input("Enter your Instagram email: ")
+password = input("Enter your Instagram password: ")
+url = 'https://www.instagram.com/accounts/login/'
+login()
+
+chat_id = input("Enter the chat group or inbox ID link: ")
+chat_url = f"https://www.instagram.com/direct/t/{chat_id}/"
+
+notepad_path = input("Enter the path of the notepad file containing messages: ")
+with open(notepad_path, 'r') as file:
+    lines = file.readlines()
+
+delay = int(input("Enter the delay time in seconds: "))
+
+clear()
+print("\n")
+print("   ______               _       ______ _ _       ")
+print("  |  ____|             (_)     |  ____(_) |      ")
+print("  | |__ _ __ __ _ _ __  _ ______| |__   _| | ___  ")
+print("  |  __| '__/ _` | '_ \| |______|  __| | | |/ _ \ ")
+print("  | |  | | | (_| | | | | |      | |    | | |  __/")
+print("  |_|  |_|  \__,_|_| |_|_|      |_|    |_|_|\___|")
+print("\n")
+
+driver = webdriver.Chrome()  # You need to have ChromeDriver installed
+
+count = 0
+for line in lines:
+    if len(line.strip()) > 3:
+        sleep(delay)
+        find_text_chat(chat_url)
+        send_text_convo(line)
+        
+        count += 1
+        if count % 10 == 0:
+            sleep(1)
+            clear()
+
+print("Messages sent successfully!")
+
+driver.quit()
