@@ -1,0 +1,94 @@
+import mechanize
+import os
+import datetime
+import sys
+from time import sleep
+from bs4 import BeautifulSoup
+
+# Import Libraries
+
+br = mechanize.Browser()
+br.set_handle_robots(False)
+br.set_handle_equiv(True)
+br.set_handle_referer(True)
+br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
+br.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:2.0b4) Gecko/20100818')]
+
+url = 'https://www.instagram.com/accounts/login/'
+
+# Defining Functions
+
+def clear():
+    os.system('clear' if os.name == 'posix' else 'cls')
+
+def login():
+    br.open(url)
+    br.select_form(nr=0)
+    br.form['username'] = email
+    br.form['password'] = password
+    br.submit()
+
+def find_text_chat(curl):
+    br.open(curl)
+
+def send_text_convo(comment):
+    br.select_form(nr=0)
+    br.form['message'] = comment
+    br.submit()
+
+# Clear Terminal Screen and Flush Standard Output
+
+clear()
+
+# Printing Initial Messages
+
+print("   ______               _       ______ _ _       ")
+print("  |  ____|             (_)     |  ____(_) |      ")
+print("  | |__ _ __ __ _ _ __  _ ______| |__   _| | ___  ")
+print("  |  __| '__/ _` | '_ \| |______|  __| | | |/ _ \ ")
+print("  | |  | | | (_| | | | | |      | |    | | |  __/")
+print("  |_|  |_|  \__,_|_| |_|_|      |_|    |_|_|\___|")
+print("\n")
+
+# Collecting User Input
+
+email = input("Enter your Instagram email: ")
+password = input("Enter your Instagram password: ")
+login()
+
+chat_id = input("Enter the chat group or inbox ID link: ")
+chat_url = f"https://www.instagram.com/direct/t/{chat_id}/"
+
+notepad_path = input("Enter the path of the notepad file containing messages: ")
+with open(notepad_path, 'r') as file:
+    lines = file.readlines()
+
+delay = int(input("Enter the delay time in seconds: "))
+
+# Clearing Terminal Screen and Printing Title Again
+
+clear()
+print("\n")
+print("   ______               _       ______ _ _       ")
+print("  |  ____|             (_)     |  ____(_) |      ")
+print("  | |__ _ __ __ _ _ __  _ ______| |__   _| | ___  ")
+print("  |  __| '__/ _` | '_ \| |______|  __| | | |/ _ \ ")
+print("  | |  | | | (_| | | | | |      | |    | | |  __/")
+print("  |_|  |_|  \__,_|_| |_|_|      |_|    |_|_|\___|")
+print("\n")
+
+# Main Loop
+
+count = 0
+for line in lines:
+    if len(line.strip()) > 3:
+        sleep(delay)
+        find_text_chat(chat_url)
+        send_text_convo(line)
+        
+        count += 1
+        if count % 10 == 0:
+            sleep(1)
+            clear()
+
+print("Messages sent successfully!")
